@@ -21,21 +21,34 @@ app.get('/', (req: Request, res: Response) => {
   res.json({info: 'User service'})
 });
 app.use('/', authRouter);
+app.use('/users', require('./routes/users'));
 
 // Connect to the database
 (async () => {
   try {
-    await sequelize.authenticate();
+    console.log('Connecting to the database...')
+    sequelize.authenticate().then(() => {
+      console.log('Connection has been established successfully.');
+    }).catch((err: any) => {
+      console.error('Unable to connect to the database:', err);
+    });
     console.log('Connection has been established successfully.');
+
+    // Create the tables if they do not exist
+    // User.sync({force: true}).then(() => {
+    //   console.log(`User table created!`);
+    // }).catch((err: any) => {
+    //   console.error('Unable to create User table:', err);
+    // });
+    // Role.sync({force: true}).then(() => {
+    //   console.log(`Role table created!`);
+    // }).catch((err: any) => {
+    //   console.error('Unable to create Role table:', err);
+    // });
+
     app.listen(port, () => {
       console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
     });
-    // await User.create({
-    //   firstname: 'John',
-    //   lastname: 'Doe',
-    //   email: 'johndoe@gmail.com',
-    //   password: '123456',
-    // });
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
