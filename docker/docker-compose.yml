@@ -3,15 +3,59 @@ version: '3.1'
 
 services:
   db:
-    image: postgres
+    build:
+      context: ../db
     restart: always
     environment:
       POSTGRES_PASSWORD: example
+      POSTGRES_USER: main
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     ports:
-        - "5432:5432"
+      - "5432:5432"
+    networks:
+      - backend
 
   adminer:
     image: adminer
     restart: always
     ports:
       - "8080:8080"
+    networks:
+      - backend
+
+  users-service:
+    build:
+      context: ../api/users-service
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+    links:
+      - db:db
+    networks:
+      - backend
+
+
+  api-gateway:
+    build:
+      context: ../api-gateway
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - users-service
+    links:
+      - users-service:users-service
+    networks:
+      - backend
+      - frontend
+
+volumes:
+  postgres_data:
+
+networks:
+  backend:
+    driver: bridge
+  frontend:
+    driver: bridge

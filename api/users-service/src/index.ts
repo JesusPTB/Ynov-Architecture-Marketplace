@@ -26,13 +26,16 @@ app.use('/users', require('./routes/users'));
 // Connect to the database
 (async () => {
   try {
+
     console.log('Connecting to the database...')
+    console.log('DB host : ' + process.env.DB_HOST);
+
     sequelize.authenticate().then(() => {
       console.log('Connection has been established successfully.');
     }).catch((err: any) => {
-      console.error('Unable to connect to the database:', err);
+      throw new Error('Unable to connect to the database:' + err);
     });
-    console.log('Connection has been established successfully.');
+    // console.log('Connection has been established successfully.');
 
     // Create the tables if they do not exist
     // User.sync({force: true}).then(() => {

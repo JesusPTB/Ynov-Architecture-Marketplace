@@ -1,0 +1,4 @@
+/api/users-service/node_modules/
+/api-gateway/node_modules/
+/api/users-service/dist/
+/node_modules/

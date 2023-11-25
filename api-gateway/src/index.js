@@ -1,14 +1,41 @@
+/**
+ *
+ */
 const express = require('express');
+/**
+ *
+ */
 const cors = require('cors');
+/**
+ *
+ */
 const morgan = require('morgan');
-const {createProxyMiddleware} = require('http-proxy-middleware');
+const { /**
+ *
+ */
+    createProxyMiddleware} = require('http-proxy-middleware');
+/**
+ *
+ */
 const createError = require('http-errors');
+/**
+ *
+ */
 const passport = require('passport');
+/**
+ *
+ */
 const axios = require('axios');
+/**
+ *
+ */
 const jwt = require('jsonwebtoken');
 dotenv = require('dotenv');
 dotenv.config();
 
+/**
+ *
+ */
 var tokenExtractor = function (req) {
     var token = null;
     if (req && req.headers && req.headers['authorization']) {
@@ -18,6 +45,9 @@ var tokenExtractor = function (req) {
 }
 
 
+/**
+ *
+ */
 const verifyToken = function (req, res, next) {
     var token = tokenExtractor(req);
     token = token.replace('Bearer ', '');
@@ -34,11 +64,20 @@ const verifyToken = function (req, res, next) {
     });
 }
 
+/**
+ *
+ */
 const app = express();
+/**
+ *
+ */
 const router = express.Router();
 router.use(cors());
 router.use(morgan('combined'));
 
+/**
+ *
+ */
 const authProxy = createProxyMiddleware({
     target: 'http://localhost:3001',
     changeOrigin: true,
@@ -53,6 +92,9 @@ const authProxy = createProxyMiddleware({
     }
 });
 
+/**
+ *
+ */
 const userProxy = createProxyMiddleware({
     target: 'http://localhost:3001',
     changeOrigin: true
