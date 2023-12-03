@@ -79,7 +79,7 @@ router.use(morgan('combined'));
  *
  */
 const authProxy = createProxyMiddleware({
-    target: 'http://localhost:3001',
+    target: 'http://users-service:3001',
     changeOrigin: true,
     pathRewrite: {
         '^/auth': '/',
