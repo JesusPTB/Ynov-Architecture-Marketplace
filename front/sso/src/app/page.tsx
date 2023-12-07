@@ -1,18 +1,46 @@
 import Image from 'next/image'
+import {LoginForm} from "@/app/components/login-form";
+import dynamic from "next/dynamic";
+import Link from "next/link";
+//
+// const NoSsrLoginForm = dynamic(
+//   () => import('@/app/components/login-form'),
+//   {ssr: false}
+// )
 
 export default function Home() {
+
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="flex flex-col items-center justify-center">
-        <Image src="/logo.svg" alt="logo" width={100} height={100}/>
-        <h1 className="text-4xl font-bold">Louidacount connexion</h1>
-      </div>
-      <div className="flex flex-col items-center justify-center">
-        <input type="text" placeholder="Email" className="border border-gray-300 p-2 rounded mb-4"/>
-        <input type="password" placeholder="Mot de passe" className="border border-gray-300 p-2 rounded mb-4"/>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Connexion
-        </button>
+    <main className="flex min-h-screen flex-col items-center p-24">
+      <div className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden">
+
+        <div>
+          <div className="w-full p-6 bg-white rounded-md shadow-md lg:max-w-xl">
+            <h1 className="text-3xl font-bold text-center text-gray-700">
+              {/*<Image*/}
+              {/*  src="/logo.png"*/}
+              {/*  alt="logo"*/}
+              {/*  width={100}*/}
+              {/*  height={100}*/}
+              {/*  className="object-contain object-center"*/}
+              {/*/>*/}
+              Connexion
+            </h1>
+            {/*<NoSsrLoginForm />*/}
+            <LoginForm/>
+          </div>
+
+          <p className="mt-4 text-sm text-center text-gray-700">
+            Pas encore de compte ?{" "}
+            <Link
+              href="/signup"
+              className="font-medium text-blue-600 hover:underline"
+            >
+              S'inscrire
+            </Link>
+          </p>
+        </div>
       </div>
     </main>
   )

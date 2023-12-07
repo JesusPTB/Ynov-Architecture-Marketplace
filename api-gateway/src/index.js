@@ -1,34 +1,18 @@
-/**
- *
- */
+
 const express = require('express');
-/**
- *
- */
+
 const cors = require('cors');
-/**
- *
- */
+
 const morgan = require('morgan');
-const { /**
- *
- */
-    createProxyMiddleware} = require('http-proxy-middleware');
-/**
- *
- */
+const {createProxyMiddleware} = require('http-proxy-middleware');
+const cookie = require('cookie');
+
 const createError = require('http-errors');
-/**
- *
- */
+
 const passport = require('passport');
-/**
- *
- */
+
 const axios = require('axios');
-/**
- *
- */
+
 const jwt = require('jsonwebtoken');
 dotenv = require('dotenv');
 dotenv.config();
@@ -79,15 +63,14 @@ router.use(morgan('combined'));
  *
  */
 const authProxy = createProxyMiddleware({
-    target: 'http://localhost:3001',
+    target: 'http://users-service:3001',
     changeOrigin: true,
     pathRewrite: {
         '^/auth': '/',
     },
     onProxyRes: (proxyRes, req, res) => {
         if (req.originalUrl === '/auth/login' && proxyRes.statusCode === 200) {
-            console.log('Login successful')
-            console.log(res);
+            console.log('Login successful');
         }
     }
 });

@@ -38,16 +38,16 @@ app.use('/users', require('./routes/users'));
     // console.log('Connection has been established successfully.');
 
     // Create the tables if they do not exist
-    // User.sync({force: true}).then(() => {
-    //   console.log(`User table created!`);
-    // }).catch((err: any) => {
-    //   console.error('Unable to create User table:', err);
-    // });
-    // Role.sync({force: true}).then(() => {
-    //   console.log(`Role table created!`);
-    // }).catch((err: any) => {
-    //   console.error('Unable to create Role table:', err);
-    // });
+    User.sync({force: true}).then(() => {
+      console.log(`User table created!`);
+    }).catch((err: any) => {
+      console.error('Unable to create User table:', err);
+    });
+    Role.sync({force: true}).then(() => {
+      console.log(`Role table created!`);
+    }).catch((err: any) => {
+      console.error('Unable to create Role table:', err);
+    });
 
     app.listen(port, () => {
       console.log(`⚡️[server]: Server is running at http://localhost:${port}`);

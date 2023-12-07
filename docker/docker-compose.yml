@@ -7,8 +7,8 @@ services:
       context: ../db
     restart: always
     environment:
-      POSTGRES_PASSWORD: example
-      POSTGRES_USER: main
+      POSTGRES_PASSWORD: example # TODO : Change this for production
+      POSTGRES_USER: main # TODO : Change this for production
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
