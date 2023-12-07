@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useFormState, useFormStatus } from 'react-dom'
 import {login} from "@/app/actions";
 import React from "react";
@@ -14,6 +13,16 @@ const initialState = {
 function SubmitButton({state}: any) {
   const { pending } = useFormStatus()
 
+
+  React.useEffect(() => {
+    if (!pending) {
+      if (state.message === 'success' && typeof window !== 'undefined' && websiteUrl !== undefined) {
+        window.location.href = websiteUrl;
+      }
+    }
+  }, [state.message, pending]);
+
+
   // if pending is true, the button is disabled and a loading indicator is shown
   if (pending) {
     return (
@@ -24,15 +33,6 @@ function SubmitButton({state}: any) {
       </button>
     )
   }
-
-  React.useEffect(() => {
-    if (!pending) {
-      if (state.message === 'success' && typeof window !== 'undefined' && websiteUrl !== undefined) {
-        window.location.href = websiteUrl;
-      }
-    }
-  }, [state.message, pending]);
-
   return (
     <button
       className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
@@ -83,12 +83,12 @@ export function LoginForm() {
                 {state.message}
               </div>
           }
-          <Link
-            href="/forget"
-            className="text-xs text-blue-600 hover:underline"
-          >
-            Mot de passe oublié ?
-          </Link>
+          {/*<Link*/}
+          {/*  href="/forget"*/}
+          {/*  className="text-xs text-blue-600 hover:underline"*/}
+          {/*>*/}
+          {/*  Mot de passe oublié ?*/}
+          {/*</Link>*/}
           <div className="mt-2">
             <SubmitButton state={state} />
           </div>
