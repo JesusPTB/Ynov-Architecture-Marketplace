@@ -56,7 +56,13 @@ router.post('/login', function (req, res, next) {
         lastname: user.lastname,
         email: user.email,
       }, process.env.JWT_SECRET!);
-      return res.json({token});
+
+      // Set the token as a HttpOnly cookie
+      console.log(token)
+      res.cookie('jwt', token, {httpOnly: true, secure: true, sameSite: 'none'});
+      console.log('cookie created successfully');
+
+      return res.json({message: "Logged in successfully"});
     });
   })(req, res, next);
 });

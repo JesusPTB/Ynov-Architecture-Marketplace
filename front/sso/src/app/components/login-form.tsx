@@ -11,7 +11,6 @@ const initialState = {
 function SubmitButton() {
   const { pending } = useFormStatus()
 
-  console.log('pending', pending)
   // if pending is true, the button is disabled and a loading indicator is shown
   if (pending) {
     return (
@@ -33,8 +32,8 @@ function SubmitButton() {
 
 export function LoginForm() {
   const [state, formAction] = useFormState(login, initialState)
-  return (
 
+  return (
         <form className="mt-6" action={formAction}>
           <div className="mb-4">
             <label
@@ -72,9 +71,6 @@ export function LoginForm() {
           </Link>
           <div className="mt-2">
             <SubmitButton />
-            <p aria-live="polite" className="sr-only" role="status">
-              {state?.message}
-            </p>
           </div>
         </form>
 

@@ -1,20 +1,42 @@
+"use client";
+
 import Link from "next/link";
-import Image from "next/image";
+import {useFormState, useFormStatus} from "react-dom";
+import {signup} from "@/app/actions";
+
+const initialState = {
+  message: '',
+}
+
+function SubmitButton() {
+  const { pending } = useFormStatus()
+
+  // if pending is true, the button is disabled and a loading indicator is shown
+  if (pending) {
+    return (
+      <button
+        className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+        type="submit" aria-disabled={pending}>
+        Inscription...
+      </button>
+    )
+  }
+  return (
+    <button
+      className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+      type="submit" aria-disabled={pending}>
+      S'inscrire
+    </button>
+  )
+}
 
 export default function SignupForm() {
-  'use client';
+  const [state, formAction] = useFormState(signup, initialState)
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden">
       <div className="w-full p-6 bg-white rounded-md shadow-md lg:max-w-xl">
         <h1 className="text-3xl font-bold text-center text-gray-700">
-          {/*<Image*/}
-          {/*  src="/logo.png"*/}
-          {/*  alt="logo"*/}
-          {/*  width={100}*/}
-          {/*  height={100}*/}
-          {/*  className="object-contain object-center"*/}
-          {/*/>*/}
           Inscription
         </h1>
         <form className="mt-6">
@@ -68,10 +90,7 @@ export default function SignupForm() {
           </div>
 
           <div className="mt-2">
-            <button
-              className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
-              S'inscrire
-            </button>
+            <SubmitButton />
           </div>
         </form>
 
