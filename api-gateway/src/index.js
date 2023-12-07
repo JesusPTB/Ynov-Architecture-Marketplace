@@ -79,7 +79,7 @@ const authProxy = createProxyMiddleware({
  *
  */
 const userProxy = createProxyMiddleware({
-    target: 'http://localhost:3001',
+    target: 'http://users-service:3001',
     changeOrigin: true
 });
 
