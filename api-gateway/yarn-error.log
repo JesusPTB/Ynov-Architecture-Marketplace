@@ -3,7 +3,6 @@ Arguments:
 
 PATH: 
   /usr/local/sbin:/usr/local/bin:/usr/bin:/opt/flutter/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/jesus/Ynov/Archi/Marketplace/node_modules/.bin:/home/jesus/.config/composer/vendor/bin:/home/jesus/.yarn/bin:/home/jesus/Android/Sdk/emulator:/home/jesus/Android/Sdk/platform-tools
-
 Yarn version: 
   1.22.19
 
@@ -13,7 +12,8 @@ Node version:
 Platform: 
   linux x64
 
-Trace: 
+Trace: <<<<<<< HEAD
+
   SyntaxError: /home/jesus/Ynov/Archi/Marketplace/api-gateway/package.json: Expected ',' or '}' after property value in JSON at position 231 (line 9 column 21)
       at JSON.parse (<anonymous>)
       at /usr/lib/node_modules/yarn/lib/cli.js:1629:59
