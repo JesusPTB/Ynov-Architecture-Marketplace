@@ -36,6 +36,23 @@ services:
     networks:
       - backend
 
+  monolith-api:
+    restart: always
+    container_name: monolith-api-container
+    build:
+      context: ../Monolith
+      dockerfile: Dockerfile
+    ports:
+      - "4000:80"
+    depends_on:
+      - db
+      - users-service
+    links:
+      - db:db
+      - users-service:users-service
+    networks:
+      - backend
+    command: ["dotnet", "MonolithApi.dll"]
 
   api-gateway:
     build:
@@ -45,6 +62,7 @@ services:
     depends_on:
       - db
       - users-service
+      - monolith-api
     links:
       - users-service:users-service
     networks:
