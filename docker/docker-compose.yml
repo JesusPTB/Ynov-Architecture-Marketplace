@@ -69,18 +69,18 @@ services:
       - backend
       - frontend
 
-#  sso:
-#    build:
-#      context: ../front/sso
-#    ports:
-#      - "8000:8000"
-#    depends_on:
-#      - api-gateway
-#    links:
-#      - api-gateway:api-gateway
-#    networks:
-#      - frontend
-#
+  sso:
+    build:
+      context: ../front/sso
+    ports:
+      - "8000:8000"
+    depends_on:
+      - api-gateway
+    links:
+      - api-gateway:api-gateway
+    networks:
+      - frontend
+
   app:
     build:
       context: ../front/app
