@@ -40,9 +40,17 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.RegisterAppServices();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -61,4 +69,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 DataSeeder.Initialize(context);
+app.UseCors("AllowAll");
 app.Run();

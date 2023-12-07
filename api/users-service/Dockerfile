@@ -3,14 +3,14 @@ FROM node:21
 
 WORKDIR /usr/src/app
 
-COPY package.json yarn.lock ./
+COPY package.json package-lock.json ./
 
-RUN yarn install
+RUN npm install
 
 COPY . .
 
 EXPOSE 3001
 
-RUN yarn build
+RUN npm run build
 
-CMD ["yarn", "dev"]
+CMD ["npm", "run", "dev"]

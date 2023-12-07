@@ -83,14 +83,19 @@ const userProxy = createProxyMiddleware({
     changeOrigin: true
 });
 
+const monolithProxy = createProxyMiddleware({
+    target: 'http://monolith-api:80',
+    changeOrigin: true,
+});
+
 
 router.use('/auth', authProxy);
 router.use('/users', userProxy);
+router.use('/api', monolithProxy);
 
 app.get('/profile', verifyToken, function (req, res) {
     res.send(req.user.profile);
 });
-
 
 app.use(router);
 app.listen(3000, () => console.log('API Gateway listening on port 3000'));
