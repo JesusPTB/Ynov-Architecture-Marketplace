@@ -16,7 +16,7 @@ export async function login(prevState: any, formData: FormData) {
   });
   console.log('result', result);
   try {
-    const res = await fetch('http://localhost:3000/auth/login', {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_GATEWAY + '/auth/login', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(result),
@@ -59,4 +59,5 @@ export async function signup(prevState: any, formData: FormData) {
   })
 
   console.log('result', result);
+  return {message: 'success'};
 }

@@ -73,6 +73,5 @@ export function LoginForm() {
             <SubmitButton />
           </div>
         </form>
-
   );
 }

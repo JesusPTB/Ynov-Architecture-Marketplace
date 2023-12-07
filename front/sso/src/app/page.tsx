@@ -37,7 +37,7 @@ export default function Home() {
               href="/signup"
               className="font-medium text-blue-600 hover:underline"
             >
-              S'inscrire
+              S&apos;inscrire
             </Link>
           </p>
         </div>
