@@ -31,6 +31,7 @@ services:
       - "3001:3001"
     depends_on:
       - db
+      - monolith-api
     links:
       - db:db
     networks:
@@ -46,10 +47,8 @@ services:
       - "4000:80"
     depends_on:
       - db
-      - users-service
     links:
       - db:db
-      - users-service:users-service
     networks:
       - backend
     command: ["dotnet", "MonolithApi.dll"]
@@ -64,22 +63,38 @@ services:
       - users-service
       - monolith-api
     links:
+      - monolith-api:monolith-api
       - users-service:users-service
     networks:
       - backend
       - frontend
 
-  sso:
+#  sso:
+#    build:
+#      context: ../front/sso
+#    ports:
+#      - "8000:8000"
+#    depends_on:
+#      - api-gateway
+#    links:
+#      - api-gateway:api-gateway
+#    networks:
+#      - frontend
+#
+  app:
     build:
-      context: ../front/sso
+      context: ../front/app
     ports:
-      - "8000:8000"
+      - "8001:8000"
     depends_on:
       - api-gateway
+      - monolith-api
     links:
       - api-gateway:api-gateway
+      - monolith-api:monolith-api
     networks:
       - frontend
+      - backend
 
 volumes:
   postgres_data:
