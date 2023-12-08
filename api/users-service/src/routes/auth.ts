@@ -12,6 +12,7 @@ import {User} from "../Models/user";
 
 const router = express.Router();
 
+/* Passport configuration */
 passport.use(new LocalStrategy(
   function (username: string, password: string, cb: any) {
     User.findOne({where: {email: username}}).then((user: any) => {
@@ -34,7 +35,7 @@ passport.use(new LocalStrategy(
   }
 ));
 
-/* Route to login returning a JWT */
+/* Route to log in returning a JWT */
 router.post('/login', function (req, res, next) {
   passport.authenticate('local', {session: false}, function (err: any, user: any, info: any) {
     if (err) {
@@ -69,6 +70,9 @@ router.post('/login', function (req, res, next) {
 
 /* Route to create a new user */
 router.post('/signup', function (req, res) {
+  if (!req.body.email || !req.body.password || !req.body.firstname || !req.body.lastname) {
+    res.status(400).send('Missing parameters');
+  }
   bcrypt
     .hash(req.body.password, 10)
     .then(hash => {
@@ -92,6 +96,7 @@ router.post('/signup', function (req, res) {
     .catch(err => console.error(err.message));
 });
 
+/* Route to verify a JWT */
 router.get('/verify/:token', function (req, res) {
     const token = req.body.token;
     jwt.verify(token, process.env.JWT_SECRET!, function (err: any, decoded: any) {

@@ -49,10 +49,13 @@ app.use('/users', require('./routes/users'));
       console.error('Unable to create Role table:', err);
     });
 
-    app.listen(port, () => {
-      console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
-    });
+
+
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
 })();
+
+app.listen(port, () => {
+  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+});
