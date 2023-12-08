@@ -1,15 +1,27 @@
 "use client";
 
-import Link from "next/link";
 import { useFormState, useFormStatus } from 'react-dom'
 import {login} from "@/app/actions";
+import React from "react";
+
+const websiteUrl = process.env.NEXT_PUBLIC_WEBSITE_URL as string;
 
 const initialState = {
   message: '',
 }
 
-function SubmitButton() {
+function SubmitButton({state}: any) {
   const { pending } = useFormStatus()
+
+
+  React.useEffect(() => {
+    if (!pending) {
+      if (state.message === 'success' && typeof window !== 'undefined' && websiteUrl !== undefined) {
+        window.location.href = websiteUrl;
+      }
+    }
+  }, [state.message, pending]);
+
 
   // if pending is true, the button is disabled and a loading indicator is shown
   if (pending) {
@@ -32,6 +44,7 @@ function SubmitButton() {
 
 export function LoginForm() {
   const [state, formAction] = useFormState(login, initialState)
+  const { pending } = useFormStatus()
 
   return (
         <form className="mt-6" action={formAction}>
@@ -63,14 +76,21 @@ export function LoginForm() {
               required
             />
           </div>
-          <Link
-            href="/forget"
-            className="text-xs text-blue-600 hover:underline"
-          >
-            Mot de passe oublié ?
-          </Link>
+          {!pending && state.message !== 'success' &&
+              <div className={
+                  "text-red-500 text-xs italic"
+              }>
+                {state.message}
+              </div>
+          }
+          {/*<Link*/}
+          {/*  href="/forget"*/}
+          {/*  className="text-xs text-blue-600 hover:underline"*/}
+          {/*>*/}
+          {/*  Mot de passe oublié ?*/}
+          {/*</Link>*/}
           <div className="mt-2">
-            <SubmitButton />
+            <SubmitButton state={state} />
           </div>
         </form>
   );
