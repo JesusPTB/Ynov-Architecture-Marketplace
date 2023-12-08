@@ -116,7 +116,8 @@ namespace MonolithApi.Services
             IQueryable<ProductReduction> source = _context.ProductReductions.AsNoTracking().
                 Where(pr => pr.Product!.ShopId == shopId).
                 Where(pr =>pr.IsActivated == isActivted).
-                Include(pr => pr.Product).Include(pr => pr.Reduction).
+                Include(pr => pr.Product)
+                .Include(pr => pr.Reduction).
                 OrderBy(pr => pr.CreatedAt);
 
             return await PaginationService<ProductReduction>.Paginate(pageNumber, pageSize, source);

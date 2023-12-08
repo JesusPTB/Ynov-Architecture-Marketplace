@@ -1,9 +1,8 @@
 import axios from "axios";
-// import {API_BASE_URL} from "../../../next.config";
+
 
 const productApi = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_GATEWAY + "Products",
-    // baseURL: `${API_BASE_URL.local}Products`,
 });
 
 export const getAllProducts = async () => {

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {
-    getPaginatedByPrice,
     getPaginatedByShop,
     getPaginatedByType,
     getPaginatedProducts
@@ -18,7 +17,9 @@ interface ProductProps{
     filter: string
 }
 
-
+function getReductionsPercent(p: Product){
+    return 15;
+}
 
 
 export const Products: React.FC<ProductProps> = (productProps) => {
@@ -29,9 +30,9 @@ export const Products: React.FC<ProductProps> = (productProps) => {
     const [priceFilter, setFilter] = useState<PriceFilter>(new PriceFilter());
 
 
-    const formatPrice = (price: number) => {
-        const truncatedPrice = price.toFixed(2);
-        const formattedPrice = truncatedPrice.replace('.', ',');
+    const formatPrice = (price: number | undefined) => {
+        const truncatedPrice = price!.toFixed(2);
+        const formattedPrice = truncatedPrice!.replace('.', ',');
         return `${formattedPrice} €`;
     };
 
@@ -100,16 +101,16 @@ export const Products: React.FC<ProductProps> = (productProps) => {
 
                             </>:
                             products && products.data?.map(item=>(
-                        <div key = {item.productId} className="conte card mb-6 w-96 bg-green-100 shadow-xl ">
-                            <figure className="w-fit">
-                                <img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" className="rounded-b-sm w-fit" />
+                        <div key = {item.productId} className="card mb-6 w-96 bg-green-100 shadow-xl ">
+                            <figure>
+                                <img src="https://th.bing.com/th/id/OIP.U1kipmxk-FSs3bn_p2MERAAAAA?w=162&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7" alt="Shoes" className="rounded-b-sm w-full" />
                             </figure>
                             <div className="card-body items-center text-center">
                                 <h2 className="card-title underline">{item.name}</h2>
                                 <p className="line-clamp-2">{item.description}</p>
                                 <h2 className="card-title">Vendeur: {item.shop?.shopName}</h2>
 
-                                <p className=" slashed-zero lining-nums"> {formatPrice(item.price)}<span className="badge ml-2"> -15%</span></p>
+                                <p className=" slashed-zero lining-nums"> {formatPrice(item.price)}<span className="badge ml-2"> -{getReductionsPercent(item)}%</span></p>
                                 <p className="line-clamp-1">Ancien prix: <span className="line-through">55,77 €</span> </p>
                                 <div className="card-actions">
                                     <button className="btn btn-primary">Buy Now</button>
@@ -120,18 +121,35 @@ export const Products: React.FC<ProductProps> = (productProps) => {
                     </div>
 
 
+        {products?.totalRecords==0?
+            <div className="stats shadow">
 
 
-        <div className="join flex bg-white p-1">
-            <button onClick={() =>setPageNumber(pageNumber - 1)} className={`join-item btn w-1/6 ${products.previousPage==null?'btn-disabled':''}`}>« Precédente</button>
-            {isLoading?
-                <div className="join-item btn  w-4/6 bg-white">
-                    <span className="loading loading-dots loading-sm"></span>
-                </div>:
-                <button className="join-item btn  w-4/6 bg-white">Page {products.pageNumber}/{products.totalPages} </button>
-            }
-            <button onClick={() =>setPageNumber(pageNumber + 1)} className={`join-item btn w-1/6 ${products.nextPage==null?'btn-disabled':''}`}>Suivante »</button>
-        </div>
+
+                <div className="stat">
+                    <div className="stat-figure text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-8 h-8 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                    </div>
+                    <div className="stat-value">Aucune donnée disponible</div>
+
+                </div>
+
+
+
+            </div>:
+            <div className="join flex bg-white p-1">
+                <button onClick={() =>setPageNumber(pageNumber - 1)} className={`join-item btn w-1/6 ${products.previousPage==null?'btn-disabled':''}`}>« Precédente</button>
+                {isLoading?
+                    <div className="join-item btn  w-4/6 bg-white">
+                        <span className="loading loading-dots loading-sm"></span>
+                    </div>:
+                    <button className="join-item btn  w-4/6 bg-white">Page {products.pageNumber}/{products.totalPages} </button>
+                }
+                <button onClick={() =>setPageNumber(pageNumber + 1)} className={`join-item btn w-1/6 ${products.nextPage==null?'btn-disabled':''}`}>Suivante »</button>
+            </div>
+        }
+
+
 
     </div>);
 }

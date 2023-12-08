@@ -3,9 +3,9 @@ import React, {useEffect, useState} from "react";
 import {getFiveProducts} from "@/pages/api/ProductTypeApi";
 import {getFiveProdReductions} from "@/pages/api/ProductReductionApi";
 import {getFiveShops} from "@/pages/api/ShopApi";
-import PaginatedData from "@/Models/PaginatedData";
-import {Product} from "@/Models/Product";
 import {ProductType} from "@/Models/ProductType";
+import {Shop} from "@/Models/Shop";
+import {ProductReduction} from "@/Models/ProductReduct";
 
 interface LeftMenuProps {
     onMenuClick: (id: number, filtre: string) => void;
@@ -13,18 +13,16 @@ interface LeftMenuProps {
 export const LeftMenu: React.FC<LeftMenuProps> = ({ onMenuClick }) => {
     const handleItemClick = (id: number, filtre: string) => {
         // Déclencher la fonction de rappel avec l'ID et le type
-        console.log(filtre);
-        console.log('abcdefghi');
-        console.log(id);
+
         if(id || filtre)
         {
             onMenuClick(id, filtre);
         }
 
     };
-    const [productTypes, setProductTypes] = useState<PaginatedData<ProductType>>({});
-    const [shops, setShops] = useState([]);
-    const [reductions, setReductions] = useState([]);
+    const [productTypes, setProductTypes] = useState<ProductType[]>([]);
+    const [shops, setShops] = useState<Shop[]>([]);
+    const [reductions, setReductions] = useState<ProductReduction[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
 
@@ -81,50 +79,50 @@ export const LeftMenu: React.FC<LeftMenuProps> = ({ onMenuClick }) => {
                             ):
                             (
                                 <div>
-                                    {/*{productTypes &&*/}
-                                    {/*    productTypes.map(item =>(*/}
-                                    {/*            <li onClick={() => handleItemClick(item.id, 'type')} key={item.id}><Link href="">{item.name}</Link></li>*/}
-                                    {/*        )*/}
+                                    {productTypes &&
+                                       productTypes.map(item =>(
+                                               <li onClick={() => handleItemClick(item.id, 'type')} key={item.id}><Link href="/">{item.name}</Link></li>
+                                    )
 
-                                    {/*    )}*/}
+                                        )}
                                 </div>
                             )
                         }
                     </ul>
                 </li>
                 <li>
-                    <Link href="/Shops">Nos boutiques</Link>
+                    <Link href="/products/Shop">Nos boutiques</Link>
                     <ul>
                         {isLoading? (
                                 <span className="loading loading-infinity loading-md"></span>
                             ):
                             (
                                 <div>
-                                    {/*{shops &&*/}
-                                    {/*    shops.map(item =>(*/}
-                                    {/*            <li onClick={() => handleItemClick(item.shopId, 'shop')} key={item.shopId}><Link href="">{item.shopName}</Link></li>*/}
-                                    {/*        )*/}
+                                    {shops &&
+                                        shops.map(item =>(
+                                                <li onClick={() => handleItemClick(item.shopId, 'shop')} key={item.shopId}><Link href="/">{item.shopName}</Link></li>
+                                            )
 
-                                    {/*    )}*/}
+                                        )}
                                 </div>
                             )
                         }
                     </ul>
                 </li>
                 <li>
-                    <a>Nos réductions</a>
+                    <Link href="/products/Reduction">Nos réductions</Link>
                     <ul>
                         {isLoading? (
                                 <span className="loading loading-infinity loading-md"></span>
                             ):
                             (
                                 <div>
-                                    {/*{reductions &&*/}
-                                    {/*    reductions.map(item =>(*/}
-                                    {/*        <li onClick={() => handleItemClick(item.id, 'reduction')} key={item.id}><Link href="">{item.reduction.title}<span className="badge">{item.reduction.percentage} %</span></Link></li>*/}
-                                    {/*                )*/}
+                                    {reductions &&
+                                        reductions.map(item =>(
+                                            <li onClick={() => handleItemClick(item.id, 'reduction')} key={item.id}><Link href="">{item.reduction?.title}<span className="badge">{item.reduction?.percentage.toFixed(2)} %</span></Link></li>
+                                                    )
 
-                                    {/*    )}*/}
+                                        )}
                                 </div>
                             )}
                     </ul>
