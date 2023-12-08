@@ -94,7 +94,6 @@ services:
       - monolith-api:monolith-api
     networks:
       - frontend
-      - backend
 
 volumes:
   postgres_data:
