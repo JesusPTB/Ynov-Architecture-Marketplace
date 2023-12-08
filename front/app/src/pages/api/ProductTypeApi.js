@@ -1,17 +1,29 @@
-// import {API_BASE_URL} from "../../../next.config";
 import axios from "axios";
 
-const productApi = axios.create({
+const productTypeApi = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_GATEWAY + "ProductTypes",
-    // baseURL: `${API_BASE_URL.local}ProductTypes`,
 });
 
 export const getFiveProducts = async () => {
     try {
-        const response = await productApi.get('/MostUsed');
+        const response = await productTypeApi.get('/MostUsed');
         return response.data;
     } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error('Error fetching datas:', error);
+        throw error;
+    }
+};
+
+export const getPaginatedProductTypes = async (pageNumber, pageSize) => {
+    try {
+
+        const response = await productTypeApi.get('/Paginated', {
+            params: { pageNumber, pageSize },
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching paginated products:', error);
         throw error;
     }
 };

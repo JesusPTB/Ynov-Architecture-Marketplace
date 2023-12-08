@@ -93,7 +93,7 @@ namespace MonolithApi.Data
                 var reductionFaker = new Faker<Reduction>("fr")
                     .RuleFor(r => r.Title, f => f.Lorem.Word())
                     .RuleFor(r => r.Description, f => f.Lorem.Sentence())
-                    .RuleFor(r => r.Percentage, f => f.Random.Double(1, 75))
+                   .RuleFor(r => r.Percentage, f => Math.Round(f.Random.Double(1, 75), 2))
                     .RuleFor(r => r.BeginDate, f => f.Date.Past().ToUniversalTime())
                     .RuleFor(r => r.EndDate, f => f.Date.Future().ToUniversalTime())
                     .RuleFor(r => r.CreatedAt, DateTime.UtcNow)
@@ -118,7 +118,7 @@ namespace MonolithApi.Data
                 var productReductionFaker = new Faker<ProductReduction>("fr")
                     // .RuleFor(pr => pr.ProductId, (f, pr) => f.PickRandom(context.Products.Where(p => p.ShopId == pr.Product.ShopId).Select(p => p.ProductId)))
                     // .RuleFor(pr => pr.ReductionId, f => f.PickRandom(context.Reductions.Select(r => r.Id)))
-                    .RuleFor(pr => pr.IsActivated, f => f.Random.Bool())
+                    .RuleFor(pr => pr.IsActivated, true)
                     .RuleFor(pr => pr.CreatedAt, DateTime.UtcNow)
                     .RuleFor(pr => pr.UpdatedAt, DateTime.UtcNow);
 

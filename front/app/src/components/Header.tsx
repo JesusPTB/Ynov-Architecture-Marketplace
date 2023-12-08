@@ -28,10 +28,10 @@ export const Header:React.FC = () => {
                     </div>
                     <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
                         <div className="card-body">
-                            <span className="font-bold text-lg">8 Items</span>
-                            <span className="text-info">Subtotal: $999</span>
+                            <span className="font-bold text-lg">8 produit</span>
+                            <span className="text-info">Total: $999</span>
                             <div className="card-actions">
-                                <button className="btn btn-primary btn-block">View cart</button>
+                                <button className="btn btn-primary btn-block">Mon panier</button>
                             </div>
                         </div>
                     </div>
@@ -45,12 +45,12 @@ export const Header:React.FC = () => {
                     <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                         <li>
                             <a className="justify-between">
-                                Profile
-                                <span className="badge">New</span>
+                                Profil
+
                             </a>
                         </li>
-                        <li><a>Settings</a></li>
-                        <li><a>Logout</a></li>
+                        <li><a>Paramètre<span className="badge">indisponible</span></a></li>
+                        <li><Link href="http://localhost:8000">Se connecter</Link></li>
                     </ul>
                 </div>
             </div>
